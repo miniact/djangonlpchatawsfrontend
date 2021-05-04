@@ -1,38 +1,75 @@
-.App {
-  text-align: center;
+.chat_message {
+  position: relative;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 8px;
+  background-color: white;
+  width: fit-content;
+  margin-top: 12px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.chat_name {
+  position: absolute;
+  top: -15px;
+  font-weight: 800;
+  font-size: xx-small;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.chat_timestemp {
+  margin-left: 10px;
+  font-size: xx-small;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.chat_receiver {
+  margin-left: auto;
+  /* background-color: #dcf8c6;
+   */
+  background: linear-gradient(to bottom right, #04bca0 0%, #47dca2 100%);
+}
+
+.chat_footer {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  height: 62px;
+  border: 1px solid lightgray;
 }
 
-.App-link {
-  color: #61dafb;
+.chat_footer > form {
+  flex: 1;
+  display: flex;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chat_footer > form > input {
+  flex: 1;
+  border-radius: 30px;
+  padding: 10px;
+  border: none !important;
+  margin: 0 10px 0px 10px;
+}
+.chat_footer > form > SendIcon {
+  align-items: center;
+}
+
+.chat_footer > form > button {
+  display: none;
+}
+
+.formclass {
+  display: flex;
+  align-items: center;
+}
+
+.docmedia {
+  max-width: 200px;
+  object-fit: contain;
+  padding: 10px;
+}
+
+.docmedia_receiver {
+  margin-left: auto;
+}
+.mycarosel {
+  display: block;
+  width: 100px;
 }
