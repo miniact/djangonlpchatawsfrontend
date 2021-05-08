@@ -1,20 +1,27 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const OCcontainer = styled.div`
+/* overflow: hidden;
+transform: rotate(180deg); */
+`
 
 function OneChat({ uname, timestp, send, msg, isDoc, docUrl }) {
     return (<>
 
         {
             isDoc ?
-                <div className={`docmedia ${!send ? "" : "docmedia_receiver"}`}>
+                <OCcontainer className={`docmedia ${!send ? "" : "docmedia_receiver"}`}>
                     <img src={docUrl} width='200' alt="Media" />
-                </div>
+                    {/* </div> */}
+                </OCcontainer>
 
-
-                : <p className={`chat_message ${!send ? "" : "chat_receiver"}`}>
+                : <OCcontainer className={`chat_message ${!send ? "" : "chat_receiver"}`}>
                     <span className="chat_name">{uname}</span>
                     {msg}
                     <span className="chat_timestemp">{timestp}</span>
-                </p>
+                    {/* </p> */}
+                </OCcontainer>
 
 
         }
@@ -24,3 +31,5 @@ function OneChat({ uname, timestp, send, msg, isDoc, docUrl }) {
 }
 
 export default OneChat
+
+

@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import Pusher from 'pusher-js'
+
+
+
 import { Avatar, IconButton, Button } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -10,6 +14,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import axios from './axios';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
+
 
 const MCcontainer = styled.div`
 flex:0.75;
@@ -58,8 +63,20 @@ const MCBody = styled.div`
     background-repeat: repeat;
     background-position: center;
     padding: 30px;
-    overflow:scroll;
-    max-height:70vh;
+    /* overflow-x: hidden; */
+/* overflow: scroll;
+transform: rotate(180deg);
+direction:rtl; */
+
+/* overflow-x: hidden;
+overflow-y: auto;
+transform: rotate(180deg); */
+overflow: auto;
+display: flex;
+  flex-direction: column-reverse;
+
+    max-height:75vh;
+    /* flex-direction: column-reverse; */
 `
 function MainChat({ imgsrc }) {
     const [{ user, chatroomlist }, dispatch] = useStateValue();
@@ -87,14 +104,34 @@ function MainChat({ imgsrc }) {
             console.log("members", res.data[0]);
             setChatRoomMembers(res.data[0]);
 
+        }).then(() => {
+            axios.get(`chat/chatsync/${roomId}`).then(res => {
+                console.log("chats", res.data);
+                setChatLists(res.data.reverse());
+                // console.log("mangesh ka log", ChatsList);
+
+            }).then(() => {
+
+                Pusher.logToConsole = true;
+
+                var pusher = new Pusher('33929cdafd04f27fb3e6', {
+                    cluster: 'ap2'
+                });
+
+                var channel = pusher.subscribe(roomId);
+                channel.bind('newmessage', function (data) {
+                    //alert(JSON.stringify(data));
+                    data.media_url = "http://localhost:8000" + data.media_url;
+
+                    console.log("chagedimageuri", data);
+                    setChatLists([data, ...ChatsList]);
+                });
+            })
         }).catch(err => alert(err.message));
 
-        axios.get(`chat/chatsync/${roomId}`).then(res => {
-            console.log("chats", res.data);
-            setChatLists(res.data);
-            // console.log("man", ChatsList);
+        // .catch(err => alert(err.message));
 
-        }).catch(err => alert(err.message));
+
 
     }, [roomId]);
 
@@ -116,7 +153,7 @@ function MainChat({ imgsrc }) {
         }).then((res) => {
             console.log(res, 'data sent!! please reload');
             // window.location.reload(false);
-            setChatLists([...ChatsList, res.data])
+            // setChatLists([...ChatsList, res.data])
         }).catch(err => alert(err.message));
         setInput("");
     }
@@ -171,7 +208,7 @@ function MainChat({ imgsrc }) {
             res.data.media_url = "http://localhost:8000" + res.data.media_url;
 
             console.log("chagedimageuri", res.data);
-            setChatLists([...ChatsList, res.data])
+            // setChatLists([res.data, ...ChatsList])
         }).catch(err => alert(err.message));
         // history.push({
         //     pathname: `/rooms/${roomId}`,
