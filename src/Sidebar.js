@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from './axios';
+import { actionTypes } from './reducer';
+
 
 import styled from "styled-components";
 import Avatar from '@material-ui/core/Avatar';
@@ -9,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { IconButton } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-
+import { useStateValue } from './StateProvider';
 import ChatInfo from './ChatInfo';
 import { Link } from 'react-router-dom';
 
@@ -69,6 +72,33 @@ const useStyles = makeStyles((theme) => ({
 
 function Sidebar() {
     const classes = useStyles();
+
+    const [Mychatlist, setMychatList] = useState([]);
+
+
+    var [{ user, chatroomlist }, dispatch] = useStateValue();
+    useEffect(() => {
+        axios.get('chat/chatroom/').then(res => {
+            console.log(res.data);
+
+            dispatch({
+                type: actionTypes.SET_CHATRL,
+                chatroomlist: res.data,
+            })
+            console.log(chatroomlist);
+            setMychatList(res.data);
+
+        }).catch(err => alert(err.message));
+
+
+    }, []);
+
+    // var [{ chatroomlist: Mychatlist }, dispatch] = useStateValue();
+    // console.log("mangya", Mychatlist)
+
+
+
+
     return (
         // container
 
@@ -80,7 +110,7 @@ function Sidebar() {
                 <IconButton>
                     <Avatar alt="Remy Sharp" src="https://i.pravatar.cc/150?img=11" className={classes.large} />
                 </IconButton>
-                <h3> Mangesh Gupta</h3>
+                <h3> {user?.first_name}</h3> &nbsp;&nbsp;<small>{user?.start_date.slice(0, 10)}</small>
                 <IconButton>
                     <MenuIcon />
                 </IconButton>
@@ -104,9 +134,21 @@ function Sidebar() {
 
             </STab>
             <Sbody>
-                <ChatInfo imgsrc="https://i.pravatar.cc/150?img=1" uname="Vijay Mohite" lastmsg="kal exam hai" />
-                <ChatInfo imgsrc="https://i.pravatar.cc/150?img=2" uname="Shubham Yadav" lastmsg="cp kar jaldi" />
-                <ChatInfo imgsrc="https://i.pravatar.cc/150?img=3" uname="Suraj Yadav" lastmsg="ans bata" />
+
+                {
+
+                    Mychatlist?.map(el => {
+                        return (<Link to={`/rooms/${el.id}`}><ChatInfo key={el.id} imgsrc="https://i.pravatar.cc/150?img=2" uname={el?.room_name} lastmsg={el.timestp.slice(0, 10)} /></Link>)
+
+                    })
+
+
+                }
+
+
+
+                {/* <ChatInfo imgsrc="https://i.pravatar.cc/150?img=2" uname="Shubham Yadav" lastmsg="cp kar jaldi" />
+                <ChatInfo imgsrc="https://i.pravatar.cc/150?img=3" uname="Suraj Yadav" lastmsg="ans bata" /> */}
             </Sbody>
         </Scontainer>
     )

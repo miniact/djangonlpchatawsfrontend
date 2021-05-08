@@ -11,6 +11,7 @@ import styled from "styled-components";
 
 // import Chat from './Chat'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useStateValue } from './StateProvider';
 
 
 import './App.css';
@@ -49,12 +50,13 @@ const Container = styled.div`
 
 function App() {
 
-  const [user, Setuser] = useState(true);
+  // const [user, Setuser] = useState(null);
+  const [{ user }, dispatch] = useStateValue();
   return (
     //BEM syntax
 
 
-    !user ? (<Body><Login /></Body>) :
+    !user ? (<Router><Body><Login /></Body></Router>) :
 
       (
 
@@ -102,7 +104,7 @@ function App() {
               <Body>
                 <Container>
                   <Sidebar />
-                  <MainChat />
+                  {/* <MainChat /> */}
                 </Container>
               </Body>
             </Route>

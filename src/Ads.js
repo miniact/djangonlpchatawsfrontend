@@ -1,11 +1,18 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import styled from 'styled-components'
 import image1 from './logo.svg';
 // import image2 from './logo.svg';
 // import image3 from './logo.svg';
 // import MyCarousel from './MyCarousel';
+import Loader from './Loader'
+import axios from './axios/axiosads'
+
+
+
+
+
 const Cimg = styled.img`
 padding:50px;
 object-fit: contain;
@@ -18,6 +25,24 @@ const cdiv = styled.div`
 
 const CarouselContainer = () => {
     // document.getElementsByTagName('body').classList = "bg-dark";
+
+    const [isLoading, setIsLoding] = useState(true)
+    const [adsArr, setAdsArr] = useState([])
+
+    useEffect(() => {
+        axios.get('/api/ads/').then(res => {
+            setAdsArr(res.data);
+            console.log(res.data);
+            setIsLoding(false);
+
+        }).catch(err => alert(err.message));
+
+
+
+
+
+    }, []);
+
     return (
 
         <div className="bg-dark h-100">
@@ -38,47 +63,66 @@ const CarouselContainer = () => {
 
 
 
-            {/* <Carousel>
-                {/* <MyCarousel Cimgsrc={image1} domain="IT" desc="DEV ADS" />
 
-            </Carousel> */}
+            { isLoading ? (<Loader />) : (
 
-            <cdiv className="bg-dark">
-                <Carousel >
+                <cdiv className="bg-dark">
+                    <Carousel >
+                        {
+                            adsArr.map(el => {
+                                return (<Carousel.Item className="p-10 rounded m-auto" >
 
-                    <Carousel.Item className="p-10 rounded m-auto" >
+                                    <Cimg
+                                        className="d-block m-auto"
+                                        // src="https://trello-attachments.s3.amazonaws.com/5f81c78bb4c7951c3be5060c/5fb1d3656e20326524242704/fd6debd661d28abc2d9fda3d18261af8/NLP_WATTSAPP.png"
+                                        src={el.adimg}
+                                        alt="Slider Image"
+                                    />
 
-                        <Cimg
-                            className="d-block m-auto"
-                            src="https://trello-attachments.s3.amazonaws.com/5f81c78bb4c7951c3be5060c/5fb1d3656e20326524242704/fd6debd661d28abc2d9fda3d18261af8/NLP_WATTSAPP.png"
-                            alt="Second slide"
-                        />
+                                    <Carousel.Caption>
+                                        <h3>{el.orgname}</h3>
+                                        <p>{el.adsdec}</p>
 
-                        <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        <a href={el.weburl} target="_blank"> <button className="text-white btn btn-primary">See More</button></a>
+                                    </Carousel.Caption>
+                                </Carousel.Item>)
 
-                            <button className="btn btn-primary">See More</button>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item className="p-10 rounded  m-auto">
-                        <Cimg
-                            className="d-block m-auto p-auto"
-                            src="https://i.pravatar.cc/300"
-                            alt="Third slide"
-                        />
 
-                        <Carousel.Caption>
-                            <h3>Third slide label</h3>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                            <button className="btn btn-primary">See More</button>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel>
-            </cdiv>
+                            })
+
+
+
+
+                        }
+
+
+                    </Carousel>
+                </cdiv>
+            )
+
+
+
+            }
+
 
         </div>
     )
 }
 
 export default CarouselContainer;
+
+
+{/* 
+                        <Carousel.Item className="p-10 rounded  m-auto">
+                            <Cimg
+                                className="d-block m-auto p-auto"
+                                src="https://i.pravatar.cc/300"
+                                alt="Third slide"
+                            />
+
+                            <Carousel.Caption>
+                                <h3>Third slide label</h3>
+                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                                <button className="btn btn-primary">See More</button>
+                            </Carousel.Caption>
+                        </Carousel.Item> */}
