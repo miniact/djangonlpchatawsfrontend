@@ -106,34 +106,45 @@ function MainChat({ imgsrc }) {
 
         }).then(() => {
             axios.get(`chat/chatsync/${roomId}`).then(res => {
-                console.log("chats", res.data);
-                setChatLists(res.data.reverse());
+                // console.log("chats: ", res.data);
+                setChatLists(res.data);
                 // console.log("mangesh ka log", ChatsList);
+                // console.log("chats before pusher0: ", ChatsList);
 
-            }).then(() => {
-
-                Pusher.logToConsole = true;
-
-                var pusher = new Pusher('33929cdafd04f27fb3e6', {
-                    cluster: 'ap2'
-                });
-
-                var channel = pusher.subscribe(roomId);
-                channel.bind('newmessage', function (data) {
-                    //alert(JSON.stringify(data));
-                    data.media_url = "http://localhost:8000" + data.media_url;
-
-                    console.log("chagedimageuri", data);
-                    setChatLists([data, ...ChatsList]);
-                });
             })
         }).catch(err => alert(err.message));
+
+
 
         // .catch(err => alert(err.message));
 
 
 
     }, [roomId]);
+
+    console.log("chats before pusher0: ", ChatsList);
+
+    useEffect(() => {
+        // Pusher.logToConsole = true;
+
+        var pusher = new Pusher('33929cdafd04f27fb3e6', {
+            cluster: 'ap2'
+        });
+
+        var channel = pusher.subscribe(roomId);
+        channel.bind('newmessage', function (data) {
+            //alert(JSON.stringify(data));
+            data.media_url = "http://localhost:8000" + data.media_url;
+
+            console.log("chagedimageuri", data);
+            setChatLists([...ChatsList, data]);
+            console.log("chats after pusher: ", ChatsList);
+        });
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [roomId, ChatsList])
 
 
 
@@ -294,7 +305,8 @@ function MainChat({ imgsrc }) {
                     <OneChat uname="mangesh gupta" timestp="1:00 am" send={true} msg="hello!!" isDoc={true} docUrl='https://i.pravatar.cc/200' />
                     <OneChat uname="mangesh gupta" timestp="1:00 am" send={false} msg="hello!!" isDoc={true} docUrl='https://i.pravatar.cc/200' /> */}
                 {
-                    ChatsList?.map(el => {
+
+                    [...ChatsList].reverse()?.map(el => {
                         return (<OneChat uname={el.sender_name} key={el.id} timestp={el.timestp} send={el.sent_by == user.id} msg={el.message} isDoc={el.chat_type == "media"} docUrl={el.media_url} />)
 
 
