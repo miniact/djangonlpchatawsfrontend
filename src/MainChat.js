@@ -140,10 +140,10 @@ function MainChat({ imgsrc }) {
             setChatLists([...ChatsList, data]);
             console.log("chats after pusher: ", ChatsList);
         });
-        return () => {
-            channel.unbind_all();
-            channel.unsubscribe();
-        };
+        // return () => {
+        //     channel.unbind_all();
+        //     channel.unsubscribe();
+        // };
     }, [roomId, ChatsList])
 
 
@@ -243,7 +243,7 @@ function MainChat({ imgsrc }) {
             <MCheader>
                 <LeftDiv>
                     <IconButton>
-                        <Avatar alt="Remy Sharp" src={imgsrc} />
+                        <Avatar alt="Remy Sharp" src={ChatRoomMembers?.room_avatar} />
                     </IconButton>
                     <Uname> {/*console.log("chatm", chatroomlist)*/} {ChatRoomMembers?.room_name}</Uname>
                 </LeftDiv>
@@ -307,7 +307,7 @@ function MainChat({ imgsrc }) {
                 {
 
                     [...ChatsList].reverse()?.map(el => {
-                        return (<OneChat uname={el.sender_name} key={el.id} timestp={el.timestp} send={el.sent_by == user.id} msg={el.message} isDoc={el.chat_type == "media"} docUrl={el.media_url} />)
+                        return (<OneChat uname={el.sender_name} key={el.id} timestp={el.timestp} send={el.sent_by == user.id} msg={el.message} isDoc={el.chat_type == "media"} docUrl={el.media_url} tags={el.tags} />)
 
 
                     })

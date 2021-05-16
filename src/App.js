@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 //router
 import MainChat from './MainChat'
 import Sidebar from './Sidebar'
+import Promo from './Promo'
 
 import styled from "styled-components";
 
@@ -18,6 +19,7 @@ import './App.css';
 import Login from './Login';
 import Ads from './Ads';
 // import Status from './Status'
+import MyAds from './MyAds';
 
 
 
@@ -80,6 +82,11 @@ function App() {
               {/* <Status /> */}
             </Route>
 
+            <Route path="/myads">
+              <MyAds />
+              {/* <Status /> */}
+            </Route>
+
 
 
             <Route path="/status">
@@ -105,6 +112,7 @@ function App() {
                 <Container>
                   <Sidebar />
                   {/* <MainChat /> */}
+                  <Promo />
                 </Container>
               </Body>
             </Route>

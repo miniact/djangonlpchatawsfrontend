@@ -126,7 +126,7 @@ function Sidebar() {
                 <IconButton>
                     <InsertCommentIcon />
                 </IconButton>
-                <Link to="/ads">
+                <Link to="/myads">
                     <IconButton >
                         <PhotoLibraryIcon />
                     </IconButton>
@@ -138,7 +138,7 @@ function Sidebar() {
                 {
 
                     Mychatlist?.map(el => {
-                        return (<Link to={`/rooms/${el.id}`}><ChatInfo key={el.id} imgsrc="https://i.pravatar.cc/150?img=2" uname={el?.room_name} lastmsg={el.timestp.slice(0, 10)} /></Link>)
+                        return (<Link to={`/rooms/${el.id}`}><ChatInfo key={el.id} imgsrc={el?.room_avatar} uname={el?.room_name} lastmsg={el.timestp.slice(0, 10)} /></Link>)
 
                     })
 

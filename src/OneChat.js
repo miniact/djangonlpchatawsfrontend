@@ -6,7 +6,16 @@ const OCcontainer = styled.div`
 transform: rotate(180deg); */
 `
 
-function OneChat({ uname, timestp, send, msg, isDoc, docUrl }) {
+function OneChat({ uname, timestp, send, msg, isDoc, docUrl, tags }) {
+
+
+    let uniquetags = ''
+    if (tags) {
+
+        uniquetags = [...new Set(tags.split(' '))].toString();
+    }
+
+
     return (<>
 
         {
@@ -21,6 +30,7 @@ function OneChat({ uname, timestp, send, msg, isDoc, docUrl }) {
                     {msg}
                     <span className="chat_timestemp">{timestp}</span>
                     {/* </p> */}
+                    <span className="chat_tag">{uniquetags}</span>
                 </OCcontainer>
 
 
