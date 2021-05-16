@@ -126,8 +126,8 @@ function MainChat({ imgsrc }) {
 
     useEffect(() => {
         // Pusher.logToConsole = true;
-
-        var pusher = new Pusher('33929cdafd04f27fb3e6', {
+        // 33929cdafd04f27fb3e6
+        var pusher = new Pusher('8b28a64ea3db0a1f776b', {
             cluster: 'ap2'
         });
 
