@@ -14,6 +14,10 @@ function OneChat({ uname, timestp, send, msg, isDoc, docUrl, tags }) {
 
         uniquetags = [...new Set(tags.split(' '))].toString();
     }
+    let caption = ''
+    if (isDoc) {
+        caption = msg
+    }
 
 
     return (<>
@@ -23,6 +27,8 @@ function OneChat({ uname, timestp, send, msg, isDoc, docUrl, tags }) {
                 <OCcontainer className={`docmedia ${!send ? "" : "docmedia_receiver"}`}>
                     <img src={docUrl} width='200' alt="Media" />
                     {/* </div> */}
+                    {/* <p><span className="chat_tag">{caption}zxdjkfglkdfhlknd</span></p> */}
+                    <span className="chat_timestemp">{caption}</span>
                 </OCcontainer>
 
                 : <OCcontainer className={`chat_message ${!send ? "" : "chat_receiver"}`}>
