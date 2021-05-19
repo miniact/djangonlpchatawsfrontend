@@ -18,7 +18,10 @@ function OneChat({ uname, timestp, send, msg, isDoc, docUrl, tags }) {
     }
     let caption = ''
     if (isDoc) {
-        caption = msg
+        if (msg != 'BLANKNLPHAI') {
+            caption = msg
+        }
+
     }
 
 

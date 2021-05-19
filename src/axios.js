@@ -7,7 +7,7 @@ const baseURL = `${AWSbaseURL}/api/`//"http://localhost:8000/api/";
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
-    timeout: 6000,
+    timeout: 15000,
     headers: {
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
         'Content-Type': 'application/json',

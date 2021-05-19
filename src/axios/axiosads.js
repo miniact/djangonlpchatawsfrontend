@@ -1,5 +1,5 @@
 import axios from 'axios';
-import AWSbaseURL from './constants';
+import AWSbaseURL from '../constants';
 // const baseURL = 'https://djangonlpwhatsapp.herokuapp.com/';
 
 const baseURL = `${AWSbaseURL}`//"http://localhost:8000";

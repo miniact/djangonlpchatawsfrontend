@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import AWSbaseURL from './constants';
+import AWSbaseURL from '../constants';
 
 const facebookLogin = (accesstoken) => {
     // var history = useHistory();
