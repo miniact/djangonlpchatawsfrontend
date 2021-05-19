@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Pusher from 'pusher-js'
+import AWSbaseURL from './constants';
 
 
 
@@ -137,7 +138,7 @@ function MainChat({ imgsrc }) {
             //alert(JSON.stringify(data));
             // data.media_url = "https://djangonlpwhatsapp.herokuapp.com" + data.media_url;
 
-            data.media_url = "http://localhost:8000" + data.media_url;
+            data.media_url = AWSbaseURL + data.media_url;
 
             console.log("chagedimageuri", data);
             setChatLists([...ChatsList, data]);
@@ -220,7 +221,7 @@ function MainChat({ imgsrc }) {
             console.log(res, 'data sent!! pleas reload');
             // window.location.reload(false);
             // res.data.media_url = "https://djangonlpwhatsapp.herokuapp.com" + res.data.media_url;
-            res.data.media_url = "http://localhost:8000" + res.data.media_url;
+            res.data.media_url = AWSbaseURL + res.data.media_url;
 
             console.log("chagedimageuri", res.data);
             // setChatLists([res.data, ...ChatsList])

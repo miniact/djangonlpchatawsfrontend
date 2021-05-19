@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import AWSbaseURL from './constants';
 
 const facebookLogin = (accesstoken) => {
     // var history = useHistory();
     console.log(accesstoken);
     axios
-        .post('http://localhost:8000/api/magicauth/convert-token', {
+        .post(`${AWSbaseURL}/api/magicauth/convert-token`, {
             token: accesstoken,
             backend: 'google-oauth2',
             grant_type: 'convert_token',

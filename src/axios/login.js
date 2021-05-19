@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const baseURL = "http://localhost:8000";
+import AWSbaseURL from './constants';
+const baseURL = `${AWSbaseURL}`;//"http://localhost:8000";
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
