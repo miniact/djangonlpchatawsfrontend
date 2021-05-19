@@ -73,7 +73,8 @@ overflow-y: auto;
 transform: rotate(180deg); */
 overflow: auto;
 display: flex;
-  flex-direction: column-reverse;
+  /* flex-direction: column-reverse; */
+  flex-direction:column;
 
     max-height:75vh;
     /* flex-direction: column-reverse; */
@@ -134,6 +135,8 @@ function MainChat({ imgsrc }) {
         var channel = pusher.subscribe(roomId);
         channel.bind('newmessage', function (data) {
             //alert(JSON.stringify(data));
+            // data.media_url = "https://djangonlpwhatsapp.herokuapp.com" + data.media_url;
+
             data.media_url = "http://localhost:8000" + data.media_url;
 
             console.log("chagedimageuri", data);
@@ -216,6 +219,7 @@ function MainChat({ imgsrc }) {
         axios.post(`chat/chat/upload`, formData, config).then((res) => {
             console.log(res, 'data sent!! pleas reload');
             // window.location.reload(false);
+            // res.data.media_url = "https://djangonlpwhatsapp.herokuapp.com" + res.data.media_url;
             res.data.media_url = "http://localhost:8000" + res.data.media_url;
 
             console.log("chagedimageuri", res.data);
@@ -305,8 +309,8 @@ function MainChat({ imgsrc }) {
                     <OneChat uname="mangesh gupta" timestp="1:00 am" send={true} msg="hello!!" isDoc={true} docUrl='https://i.pravatar.cc/200' />
                     <OneChat uname="mangesh gupta" timestp="1:00 am" send={false} msg="hello!!" isDoc={true} docUrl='https://i.pravatar.cc/200' /> */}
                 {
-
-                    [...ChatsList].reverse()?.map(el => {
+                    // [...ChatsList].reverse()?.map
+                    ChatsList.map(el => {
                         return (<OneChat uname={el.sender_name} key={el.id} timestp={el.timestp} send={el.sent_by == user.id} msg={el.message} isDoc={el.chat_type === "media"} docUrl={el.media_url} tags={el.tags} />)
 
 

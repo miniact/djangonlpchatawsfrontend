@@ -5,7 +5,7 @@ const facebookLogin = (accesstoken) => {
     // var history = useHistory();
     console.log(accesstoken);
     axios
-        .post('http://127.0.0.1:8000/api/magicauth/convert-token', {
+        .post('http://localhost:8000/api/magicauth/convert-token', {
             token: accesstoken,
             backend: 'google-oauth2',
             grant_type: 'convert_token',

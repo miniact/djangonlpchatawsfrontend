@@ -4,6 +4,8 @@ import styled from 'styled-components'
 const OCcontainer = styled.div`
 /* overflow: hidden;
 transform: rotate(180deg); */
+display:flex;
+flex-direction:column;
 `
 
 function OneChat({ uname, timestp, send, msg, isDoc, docUrl, tags }) {
